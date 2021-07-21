@@ -3,6 +3,8 @@ package cl.benjamin.helpers;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,6 +15,7 @@ import cl.benjamin.entities.Drink;
 
 public final class RecipeReader 
 {   
+    private static Logger logger = Logger.getLogger(Actions.class.getName());
     private RecipeReader() { }
 
     public static Drink[] execute(String fileName)  
@@ -29,10 +32,13 @@ public final class RecipeReader
                 drinks[i] = parseRecipe((JSONObject) recipeList.get(i));
             }            
         } catch (FileNotFoundException e) {
+            logger.log(Level.WARNING, "File not found: {0}", e.getMessage());
             e.printStackTrace();
         } catch (IOException e) {
+            logger.log(Level.WARNING, "IOException: {0}", e.getMessage());
             e.printStackTrace();
         } catch (ParseException e) {
+            logger.log(Level.SEVERE, "ParseException: {0}", e.getMessage());
             e.printStackTrace();
         }
         return drinks;

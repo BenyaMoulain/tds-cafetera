@@ -4,12 +4,15 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import cl.benjamin.entities.CoffeeMaker;
 import cl.benjamin.entities.Inventory;
 
 public final class Actions {
     private Actions () {}
+    private static Logger logger = Logger.getLogger(Actions.class.getName());
 
     public static void addIngredientsToInventory(Inventory inventory) {
         askForIngredientToAdd(inventory, "coffee");
@@ -28,36 +31,40 @@ public final class Actions {
                 quantity = Integer.parseInt(input);
                 switch (ingredient) {
                     case "coffee":
+                        logger.log(Level.INFO, "adding {0} units of coffee", quantity);
                         inventory.addCoffee(quantity);
                         break;
                     case "chocolate":
+                        logger.log(Level.INFO, "adding {0} units of chocolate", quantity);
                         inventory.addChocolate(quantity);
                         break;
                     case "milk":
+                        logger.log(Level.INFO, "adding {0} units of milk", quantity);
                         inventory.addMilk(quantity);
                         break;
                     case "sugar":
+                        logger.log(Level.INFO, "adding {0} units of sugar", quantity);
                         inventory.addSugar(quantity);
                         break;
                     default:
+                        logger.log(Level.SEVERE, "unknown ingredient");
                         break;
                 }
             } catch (NumberFormatException e) {
+                logger.log(Level.INFO, "NumberFormatException Error: {0}", e.getMessage());
                 System.out.println("please enter a number");
             }
         }
     }
 
     public static void showInventory(Inventory inventory) {
-        System.out.println("show inventory event3");
         inventory.showInventory();
     }
 
     
     public static void sellRecipe(CoffeeMaker coffeeMaker) {
-        System.out.println("sell recipe event");
         System.out.println("how much cash do you want to add?");
-        Scanner amountScanner = new Scanner(System.in);
+        Scanner amountScanner = new Scanner(new InputStreamReader(System.in));
         Scanner drinkScanner =new Scanner(new InputStreamReader(System.in, StandardCharsets.ISO_8859_1));
         try {
             int amount = amountScanner.nextInt();
@@ -67,12 +74,14 @@ public final class Actions {
                 System.out.println("please enter a positive number");
             }
         } catch (NumberFormatException e) {
+            logger.log(Level.WARNING, "NumberFormatException Error: {0}", e.getMessage());
             System.out.println("please enter a number");
         } catch (InputMismatchException e) {
+            logger.log(Level.WARNING, "InputMismatchException Error: {0}", e.getMessage());
             System.out.println("please enter a integer number");
         } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error: {0}", e.getMessage());
             System.out.println("something went wrong");
-            System.out.println(e.getMessage());
         }
         if (coffeeMaker.getCash() > 0) {
             coffeeMaker.showDrinks();
