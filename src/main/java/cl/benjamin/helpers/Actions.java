@@ -31,19 +31,15 @@ public final class Actions {
                 quantity = Integer.parseInt(input);
                 switch (ingredient) {
                     case "coffee":
-                        logger.log(Level.INFO, "adding {0} units of coffee", quantity);
                         inventory.addCoffee(quantity);
                         break;
                     case "chocolate":
-                        logger.log(Level.INFO, "adding {0} units of chocolate", quantity);
                         inventory.addChocolate(quantity);
                         break;
                     case "milk":
-                        logger.log(Level.INFO, "adding {0} units of milk", quantity);
                         inventory.addMilk(quantity);
                         break;
                     case "sugar":
-                        logger.log(Level.INFO, "adding {0} units of sugar", quantity);
                         inventory.addSugar(quantity);
                         break;
                     default:
