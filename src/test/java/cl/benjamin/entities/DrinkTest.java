@@ -16,7 +16,7 @@ public class DrinkTest {
 
     @Test
     public void testDrinkGetters() {
-        assertEquals("Drink name is not equal", "cafee", drink.getName());
+        assertEquals("Drink name is not equal", "cafe", drink.getName());
         assertEquals(100, drink.getPrice(), 0);
         assertEquals(10, drink.getCoffee(), 0);
         assertEquals(0, drink.getChocolate(), 0);
